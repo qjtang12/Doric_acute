@@ -1,2 +1,2 @@
 # Doric_acute
-The matlab scripts used to process the fiber photometry data will be available to public after publication of the manuscript.
+The matlab scripts used to process the fiber photometry data in research work: Food induced dopamine signaling in AgRP neurons promotes feeding
