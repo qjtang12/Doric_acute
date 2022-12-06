@@ -3,9 +3,9 @@ clear all
 % setting parameters
 samplerate=120; % in unit of Hz, 120 Hz is how it is saved when select 100 downsampling when saving.
 epoc=300; % manually enter this accordingly
-t_minus=300; % time before time point 0, unit in second
-t_plus=300; % time after time point 0, unit in secon
-n_chn=2;  % how many animals
+t_minus=180; % time before time point 0, unit in second
+t_plus=180; % time after time point 0, unit in secon
+n_chn=4;  % how many animals
 t_off=0; % the video is 10s ahead of the recording
 
 % load data 
@@ -42,17 +42,16 @@ for n=1:n_session
     end
 end
 
-for n=1:n_session
-    data_zscore_down(:,:,n)=downsample(squeeze(data_zscore(:,1,:)),samplerate./10);
+for n=1:n_chn
+    data_zscore_down(:,n,:)=downsample(squeeze(data_zscore(:,n,:)),samplerate./10);
 end
 
 % save important data
 save (filename(1:end-5),'data_org','data_zscore');
 % export results to excel
 [dim1,dim2,dim3]=size(data_zscore_down);
-results=cell(dim1,dim2+3);
-for n=1:n_session
-    results(:,(n-1)*dim2+1:n*dim2)=num2cell(data_zscore_down(:,:,n));
+for n=1:n_chn
+    results(:,(n-1)*dim3+1+(n-1)*1:n*dim3+(n-1)*1)=num2cell(squeeze(data_zscore_down(:,n,:)));
 end
 
 title = strcat( filename(1:end-4),'_results');
